@@ -8,6 +8,7 @@
     """,
     'data': [
         'security/ir.model.access.csv',
+        'data/wish_lab_cron.xml',
         'views/wish_lab_views.xml',
         'views/wish_lab_menu.xml'
     ],

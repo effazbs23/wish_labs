@@ -13,7 +13,7 @@
     </record>
 
     <record id="wish_lab_action" model="ir.actions.act_window">
-        <field name="name">WishLabAction</field>
+        <field name="name">Wish Lab</field>
         <field name="res_model">wish.lab</field>
         <field name="view_mode">list</field>
     </record>
