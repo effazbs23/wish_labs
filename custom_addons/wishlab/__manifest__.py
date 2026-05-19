@@ -6,7 +6,9 @@
     'description': """
         A module to store birthdays and automatically wish the users through mail.
     """,
-    'data': [],
+    'data': [
+        'views/wish_lab_views.xml'
+    ],
     'application': True,
     'installable': True,
 }

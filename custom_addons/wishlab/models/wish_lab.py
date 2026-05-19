@@ -2,8 +2,8 @@
 from odoo import fields,models
 
 class WishLab(models.Model):
-    _name="wish.lab"
-    _description="Wish Lab Model"
+    _name='wish.lab'
+    _description='Wish Lab Model'
 
     name = fields.Char()
     email = fields.Char()
