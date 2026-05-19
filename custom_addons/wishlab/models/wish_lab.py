@@ -1,4 +1,5 @@
-from odoo import fields, models, api
+
+from odoo import fields, models, api, tools
 import datetime as dt
 
 
@@ -16,6 +17,15 @@ class WishLab(models.Model):
     def _wish_handler(self):
         partners = self.search([])
         today = dt.date.today()
+        mail_server = self.env['mail.mail']
+        conf_user = tools.config.get('wish_smtp_user')
+        conf_pass = tools.config.get('wish_smtp_pass')
+        mail_server.sudo().write(
+            {
+                'smtp_user':conf_user,
+                'smtp_pass':conf_pass,
+            }
+        )
         for record in partners:
             try:
                 with self.env.cr.savepoint():
@@ -23,10 +33,33 @@ class WishLab(models.Model):
                         conn_date = fields.Date.to_date(record.connection_date)
                         if conn_date.month == today.month and conn_date.day == today.day:
                             print(f"Anniversary with : {record.name} -> Sending email to {record.email}")
+                            email_subject = f"Happy Anniversary with us {record.name}"
+                            email_body = f"Thank you for being with us {record.name}"
+
+                            mail_vals = {
+                                'subject': email_subject,
+                                'email_to': record.email,
+                                'body_html': email_body,
+                            }
+
+                            mail = mail_server.create(mail_vals)
+                            mail.send()
+
                     if record.birthday:
                         bday = fields.Date.to_date(record.birthday)
                         if bday.month == today.month and bday.day == today.day:
                             print(f"Birthday of : {record.name} -> Sending email to {record.email}")
+                            email_subject = f"Happy Birthday {record.name}"
+                            email_body = f"Thank you for being with us {record.name}"
+
+                            mail_vals = {
+                                'subject': email_subject,
+                                'email_to': record.email,
+                                'body_html': email_body
+                            }
+
+                            mail = mail_server.create(mail_vals)
+                            mail.send()
             except Exception as e:
                 print(f"Error while sending wishes to {record.name} ID : {record.id}")
                 print("str(e)")

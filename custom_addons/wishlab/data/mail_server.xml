@@ -1,0 +1,9 @@
+<odoo>
+    <record id="wish_lab_mail_server" model="ir.mail_server">
+        <field name="name">Mail Server</field>
+        <field name="smtp_host">smtp.gmail.com</field>
+        <field name="smtp_port">587</field>
+        <field name="smtp_encryption">starttls</field>
+        <field name="smtp_debug">False</field>
+    </record>
+</odoo>
